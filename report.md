@@ -14,4 +14,19 @@ Output: `coords.txt` e `connectivity.txt`
     * In questo modo conto due volte ogni arco, devo trovare un modo per escludere i doppioni. 
     * n1 è l'indice di iterazione del ciclo, il problema è trovare n2 senza dover ricontrollare tutto il `vector<punto>` per vedere in che punto è il punto adiacente.
 
+### Task 2
+Input: `coords.txt` e `connectivity.txt`
 
+Output: `ordering.txt`
+
+
++ Ordinamento _nested dissection_: Definisco una funzione ricorsiva che prende in input un vector e un booleano che rappresenta la direzione su cui tagliare. La funzione deve fare queste cose in ordine:
+    * Non sono sicuro di come siano ordinati i punti nel vector quindi nel dubbio li ordino lungo la coordinata di taglio con `std::sort`. 
+    * All'interno del vettore trovo il valore mediano della coordinata di taglio, quindi ho il separatore.
+    * Faccio il taglio e ottengo: `V1`, `V2` e `VS`.
+    * Imposta il booleano della direzione sul valore opposto.
+    * Richiamo la funzione in se stessa, questa volta con input `V1` e `V2`. 
+    * Deve in qualche modo fermarsi quando arriva a `V1`/`V2` contenenti un singolo elemento e aggiungere l'indice n di quell'elemento in due liste `lista1`/`lista2`.
+    * Restituire `lista1 + lista2 + VS`
+
+ 
