@@ -10,7 +10,7 @@ Output: `coords.txt` e `connectivity.txt`
 
 - Generazione `coords.txt`: Due cicli for annidati, uno su i e uno su j generano tutte le coppie (i,j). xi e yj si trovano di conseguenza. Ogni punto lo rappresento con una struct `punto {i, j, x, y}` e li accumolo in un `vector<punto>`. L'indice n aumenta di 1 ogni volta che aggiungo un elemento al vector. 
 
-- Generazione `connectivity.txt`: Con un ciclo for sul `vector<punto>` controllo per ogni punto (i,j) se esistono (cioè se sono dentro il range 1,...,N) gli adiacenti (i, j+/-1) e (i+/-1, 1) e li organizzo in struct `arco {n1, n2}` che accumolo in un `vector<arco>`. L'indice e è equivalente a n nel punto precedente con la differenza che parte da zero.
+- Generazione `connectivity.txt`: Con un ciclo for sul `vector<punto>` controllo per ogni punto (i,j) se esistono (cioè se sono dentro il range 1,...,N) gli adiacenti (i, j+/-1) e (i+/-1, j) e li organizzo in struct `arco {n1, n2}` che accumolo in un `vector<arco>`. L'indice e è equivalente a n nel punto precedente con la differenza che parte da zero.
 
   Problemi:
 
@@ -55,7 +55,7 @@ Output: `A.txt`, `rhs.txt`
 - Il codice deve poter operare sull'ordinamento naturale o sull'ordinamento _nested-dissection_ a scelta dell'utente. Posso fare che il codice produce sempre i risultati per entrambi gli ordinamenti, oppure implementare un flag che governa in che modalità operare. Potrebbe essere utile un `std::unordered_map` che mappi gli indici n negli indici m corrispondenti basandosi su `ordering.txt`.
 - Costruzione di A e rhs: 
 
-  -Con un ciclo for sui punti di `coords.txt`, per ogni punto:
+  - Con un ciclo for sui punti di `coords.txt`, per ogni punto:
 
     - traduco l'indice n in m se la flag lo richiede.
     - Scrivo in `A.txt` "n n -4k/h**2" e costruisco la diagonale.
@@ -63,7 +63,22 @@ Output: `A.txt`, `rhs.txt`
   - Con un ciclo for per ogni arco (n1,n2) in `connectivity.txt`:
   
     - traduco n1,n2 in m1,m2 se il flag lo richiede.
-    - Scrivo "m1  m2  κ/h²" su `A.txt`.
+    - Scrivo "m1  m2  κ/h²" su `A.txt` e il simmetrico "m2  m1  κ/h²" su `A.txt`.
 
   Problemi:
   - Per ora ho considerato u0=0. Per u0 diverse il problema è che mi servono informazioni sui punti di bordo che in `connectivity.txt` avevo escluso perché non erano richieste, quindi o modifico la task 1 per includere le informazioni sui punti di bordo oppure devo ripetere il procedimento della task 1 senza escludere i punti del bordo. 
+
+### Task 4
+
+Input: `A.txt`, `rhs.txt`
+
+Output: Array `x` soluzione del sistema lineare
+
+- Costruzione matrice sparsa: Leggo `A.txt` con `np.loadtxt(..., unpack=True)` per ottenere tre liste `i`, `j`, `A[i,j]`. Con `scipy.sparse.coo_matrix()` costruisco la matrice in formato COO e con `.tocsc()`la converato in CSC.
+- Leggo `rhs.txt` con `np.loadtxt`.
+- Definisco la funzione `my_cholesky` come sul pdf e con `my_cholesky(-A)` ottengo L.
+- Risolvo il sistema in due passaggi:
+
+  - Prima L*y = -rhs, con `spsolve_triangular(..., lower=True)`
+  - Poi L.T*x = y, con con `spsolve_triangular(..., lower=False)`
+  - L'array x dovrebbe essere la soluzione del sistema.
