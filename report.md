@@ -82,3 +82,10 @@ Output: Array `x` soluzione del sistema lineare
   - Prima L*y = -rhs, con `spsolve_triangular(..., lower=True)`
   - Poi L.T*x = y, con con `spsolve_triangular(..., lower=False)`
   - L'array x dovrebbe essere la soluzione del sistema.
+
+
+### Task 5
+
+- Grafici della soluzione: Devo plottare la soluzione in uscita dalla task 4. Il vettore `x` dovrebbe essere ordinato secondo l'indice `m`, quindi tramite `ordering.txt` e `coords.txt` devo ricondurmi alle coordinate spaziali `i,j` in modo che il plot abbia un senso fisico. Per realizzare il grafico faccio utilizzo delle `colormaps` di `matplotlib` in modo da rappresentare diverse temperature con diversi colori.
+- È richiesto di ottenere le soluzioni per 6 valori di N per entrambi gli ordinamento, quindi dovrei eseguire un totale di 12 volte i codici delle task da 1 a 4 e segnarmi i valori richiesti (i tempi e il numero di entrate non-zero). Sembra tedioso da fare manualmente, potrei provare ad automatizzare il processo tramite la libreria di python `subprocess`, dovrei fare due cicli for, uno su N e uno interno sulla modalità di ordinamento. Probabilmente sarà necessario adattare i codici in C++, per esempio N deve essere un argomento del programma della task 1, così posso eseguirlo con N diversi senza ricompilarlo ogni volta. 
+  - Non credo di poter usare `subprocess` per runnare una cella specifica di un notebook jupyter (ovvero la task 4), quindi probabilmente sarà necessario copiare la task 4 su un file .py separato.
