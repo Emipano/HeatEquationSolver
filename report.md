@@ -10,13 +10,11 @@ Output: `coords.txt` e `connectivity.txt`
 
 - Generazione `coords.txt`: Due cicli for annidati, uno su i e uno su j generano tutte le coppie (i,j). xi e yj si trovano di conseguenza. Ogni punto lo rappresento con una struct `punto {n, i, j, x, y}` e li accumolo in un `vector<punto>`. L'indice n aumenta di 1 ogni volta che aggiungo un elemento al vector. Uso ofstream per scrivere sul file di testo.
 
-- Generazione `connectivity.txt`: Con un ciclo for sul `vector<punto>` controllo per ogni punto (i,j) se esistono (cioè se sono dentro il range 1,...,N) gli adiacenti (i, j+/-1) e (i+/-1, j) e li organizzo in struct `arco {n1, n2}` che accumolo in un `vector<arco>`. L'indice e è equivalente a n nel punto precedente con la differenza che parte da zero.
+- Generazione `connectivity.txt`: Con un ciclo for sul `vector<punto>` controllo per ogni punto (i,j) se esistono (cioè se sono dentro il range 1,...,N) gli adiacenti (i, j+/-1) e (i+/-1, j) e li organizzo in struct `arco {e, n1, n2}` che accumolo in un `vector<arco>`. L'indice n1 è l'indice di iterazione del ciclo, per trovare n2 uso la formula n(i,j) = (i -1)*N + (j -1), usando iv,jv del punto vicino. L'indice e è equivalente a n nel punto precedente. Per evitare di fare 4 cicli diversi per ogni direzione in cui c'è un punto adiacente faccio un ciclo interno su un indice k=0,...,3; e utilizzo due liste per gli spostamenti dx e dy, per definire gli adiacenti come (i+dx[k], j+dy[k]).
 
   Note:
 
   - In questo modo conto due volte ogni arco, devo trovare un modo per escludere i doppioni. 
-  - n1 è l'indice di iterazione del ciclo, il problema è trovare n2 senza dover ricontrollare tutto il `vector<punto>` per vedere in che punto è il punto adiacente.
-  Sembrerebbe valido n(i,j) = (i -1)*N + (j -1), quindi posso risalire a n2 direttamente dalle coordinate spaziali.
   - Per ora N è un int fisso, per la task 5 se voglio automatizzare lo devo rendere un argomento che posso passare da terminale (o `subprocess.run`).
 
 ### Task 2
