@@ -68,6 +68,8 @@ int main() {
 
                 int nv = (iv - 1)*N + (jv - 1);
 
+                if (p.n<nv) {
+                    
                 arco A;
 
                 A.e = e;
@@ -77,6 +79,7 @@ int main() {
                 archi.push_back(A); // aggiungo a vector
 
                 e++;  // aggiorna indice
+                }
             }
         }
     }
