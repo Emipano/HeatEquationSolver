@@ -20,75 +20,75 @@ vector<int> ordina(vector<punto> punti, bool dir_x) { // se dir_x è true taglia
         return indici;
     }
 
-    if (punti.size()>1) { // caso ricorsivo
-    
-        // riordinamento lungo x o y
-        if (dir_x) {
-            sort(punti.begin(), punti.end(), [](punto a, punto b) {
-            return a.x < b.x;   // ordina per x crescente
-            });
-        }
-        else {
-            sort(punti.begin(), punti.end(), [](punto a, punto b) {
-            return a.y < b.y;  // ordina per y crescente
-            });
-        }
+    // caso ricorsivo
 
-        // ricerca del separatore
-        int indice_mediano = punti.size()/2;
-        double separatore; 
-        punto mediano = punti[indice_mediano];
-
-        if (dir_x) {
-            separatore = mediano.x;
-        }
-        else {
-            separatore = mediano.y;
-        }
-
-        // taglio
-        vector<punto> V1;
-        vector<punto> V2;
-        vector<punto> VS;
-
-        for (const punto& p : punti) {
-            if (dir_x) { // taglio su x
-                if (p.x<separatore) {
-                    V1.push_back(p);
-                }
-                if (p.x>separatore) {
-                    V2.push_back(p);
-                }
-                if (p.x==separatore) {
-                    VS.push_back(p);
-                }
-            }
-            else {  //talgio su y
-                if (p.y<separatore) {
-                    V1.push_back(p);
-                }
-                if (p.y>separatore) {
-                    V2.push_back(p);
-                }
-                if (p.y==separatore) {
-                    VS.push_back(p);
-                }
-            }
-        }
-        // chiamata ricorsiva
-        vector<int> lista1 = ordina(V1, !dir_x); // inverte direzione con !
-        vector<int> lista2 = ordina(V2, !dir_x);
-
-        vector<int> ordine = lista1;
-        for (int x : lista2) {
-            ordine.push_back(x);
-        }
-        for (const punto& p : VS) {
-            ordine.push_back(p.n);
-        }
-
-        return ordine;
+    // riordinamento lungo x o y
+    if (dir_x) {
+        sort(punti.begin(), punti.end(), [](punto a, punto b) {
+        return a.x < b.x;   // ordina per x crescente
+        });
     }
+    else {
+        sort(punti.begin(), punti.end(), [](punto a, punto b) {
+        return a.y < b.y;  // ordina per y crescente
+        });
+    }
+
+    // ricerca del separatore
+    int indice_mediano = punti.size()/2;
+    double separatore; 
+    punto mediano = punti[indice_mediano];
+
+    if (dir_x) {
+        separatore = mediano.x;
+    }
+    else {
+        separatore = mediano.y;
+    }
+
+    // taglio
+    vector<punto> V1;
+    vector<punto> V2;
+    vector<punto> VS;
+
+    for (const punto& p : punti) {
+        if (dir_x) { // taglio su x
+            if (p.x<separatore) {
+                V1.push_back(p);
+            }
+            if (p.x>separatore) {
+                V2.push_back(p);
+            }
+            if (p.x==separatore) {
+                VS.push_back(p);
+            }
+        }
+        else {  //talgio su y
+            if (p.y<separatore) {
+                V1.push_back(p);
+            }
+            if (p.y>separatore) {
+                V2.push_back(p);
+            }
+            if (p.y==separatore) {
+                VS.push_back(p);
+            }
+        }
+    }
+    // chiamata ricorsiva
+    vector<int> lista1 = ordina(V1, !dir_x); // inverte direzione con !
+    vector<int> lista2 = ordina(V2, !dir_x);
+
+    vector<int> ordine = lista1;
+    for (int x : lista2) {
+        ordine.push_back(x);
+    }
+    for (const punto& p : VS) {
+        ordine.push_back(p.n);
+    }
+
+    return ordine;
+
 }
 
 int main() {
