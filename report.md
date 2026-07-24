@@ -24,7 +24,7 @@ Output: `ordering.txt`
 
 - Ordinamento _nested dissection_: Definisco una funzione ricorsiva che prende in input `vector<punto>` e un booleano che rappresenta la direzione su cui tagliare. La funzione deve fare queste cose in ordine:
 
-  - Controlla quanti elementi ci sono nel vector, se 1 restituisce l'indice n di quel punto, se più di 1 continuo.
+  - Controlla quanti elementi ci sono nel vector, se 1 restituisce l'indice n di quel punto, se più di 1 continuo. Se 0 non deve andare al caso ricorsivo.
   - Non sono sicuro di come siano ordinati i punti nel vector quindi nel dubbio li ordina lungo la coordinata di taglio con `std::sort`. 
   - All'interno del vettore trova il valore mediano della coordinata di taglio, quindi ho il separatore.
   - Fa il taglio e ottengo: `V1`, `V2` e `VS`.
@@ -36,8 +36,7 @@ Output: `ordering.txt`
   Problemi:
 
   - Non sono sicuro che funzioni.
-  - Se invece di un vettore con un singolo elemento ne trova uno vuoto non so se causa problemi.
-  - Se il numero di elementi del vettore è pari non ne trovo uno esattamente in mezzo. Non saprei quale scegliere tra i due centrali.
+  - Nella parte del taglio ho dovuto riscrivere due volte tutta la logica (una volta per il taglio su x e una volta per il taglio su y), c'è sicuramente un modo per scriverlo più pulito, se lo trovo lo implento.
 
 La funzione così non restituisce `ordering.txt`nel formato richiesto. L'indice m sarà la posizione nella lista finale restituita dalla funzione e l'indice n sarà il valore nella lista.
 
