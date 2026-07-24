@@ -18,7 +18,7 @@ Output: `coords.txt` e `connectivity.txt`
 
 ### Task 2
 
-Input: `coords.txt` e `connectivity.txt`
+Input: `coords.txt`
 
 Output: `ordering.txt`
 
@@ -47,20 +47,23 @@ Input: `connectivity.txt`, `ordering.txt`, `coords.txt`, u0 per il punto facolta
 
 Output: `A.txt`, `rhs.txt`
 
-- Il codice deve poter operare sull'ordinamento naturale o sull'ordinamento _nested-dissection_ a scelta dell'utente. Posso fare che il codice produce sempre i risultati per entrambi gli ordinamenti, oppure implementare un flag che governa in che modalità operare. Potrebbe essere utile un `std::unordered_map` che mappi gli indici n negli indici m corrispondenti basandosi su `ordering.txt`.
+- Il codice deve poter operare sull'ordinamento naturale o sull'ordinamento _nested-dissection_ a scelta dell'utente. Posso fare che il codice produce sempre i risultati per entrambi gli ordinamenti, oppure implementare un flag che governa in che modalità operare. Potrebbe essere utile un `std::unordered_map` che mappi gli indici n negli indici m corrispondenti basandosi su `ordering.txt`. Per comodità definisco una funzione che usa la map per tradurre da n a m se richiesto dal flag.
 - Costruzione di A e rhs: 
 
   - Con un ciclo for sui punti di `coords.txt`, per ogni punto:
 
-    - traduco l'indice n in m se la flag lo richiede.
-    - Scrivo in `A.txt` "n n -4k/h**2" e costruisco la diagonale.
-    - Scrivo in `rhs.txt` "f(x, y)" con x,y ricavati secondo la formula di task 1 a partire da i,j.
+    - Ogni volta che devo includere un indice chiamo la funzione così sceglie da solo m o n in base al flag.
+    - Scrivo in `A.txt` "n n -4k/h^2" e costruisco la diagonale.
+    - Scrivo in `rhs.txt` solo la funzione f valutata nel punto corrente. Devo comunque cambiare l'ordinamento dei valori in rhs.txt se il flag lo richiede, per farlo accumolo prima in un vector, lo ordino per n crescente e poi lo scrivo nel file.
   - Con un ciclo for per ogni arco (n1,n2) in `connectivity.txt`:
   
-    - traduco n1,n2 in m1,m2 se il flag lo richiede.
-    - Scrivo "m1  m2  κ/h²" su `A.txt` e il simmetrico "m2  m1  κ/h²" su `A.txt`.
+    - Ogni volta che devo includere un indice chiamo la funzione così sceglie da solo m o n in base al flag.
+    - Scrivo "n1  n2  k/h^2" e il simmetrico "n2  n1  k/h^2" su `A.txt`. (Se non avessi escluso i doppioni da connectivity.txt in task1 non sarebbe necessario aggiungere manualmente i simmetrici, ma ormai...)
 
-  Problemi:
+  Note:
+  - Come per la task 1 per ora N e fisso, se automatizzo la task 5 sarà da cambiare in un argomento da passare dal terminale.
+  - Il flag che decide se usare nested dissection per ora è fisso, come per N se automatizzo la task 5 lo devo rendere passabile da terminale.
+  - Ho chiamato la funzione di mappatura da n a m ogni volta che compariva un indice, col senno di poi sarebbe stato meglio definire l'indice con la funzione una sola volta e poi usare quello. Se ho tempo lo farò per migliorare la leggibilità.
   - Per ora ho considerato u0=0. Per u0 diverse il problema è che mi servono informazioni sui punti di bordo che in `connectivity.txt` avevo escluso perché non erano richieste, quindi o modifico la task 1 per includere le informazioni sui punti di bordo oppure devo ripetere il procedimento della task 1 senza escludere i punti del bordo. 
 
 ### Task 4
