@@ -33,10 +33,8 @@ Output: `ordering.txt`
 
   Se tutto va bene la funzione esegue il taglio fino a che non incontra un vector con un singolo elemento, a quel punto quella chiamata si interrompe e restituisce una lista con l'unico indice. Questo valore restituito diventa `lista1` (o 2) nel livello superiore.
 
-  Problemi:
-  - Sembrerebbe funzionare però esce un warning:  
-  task2.cpp: In function ‘std::vector<int> ordina(std::vector<punto>, bool)’:  
-  task2.cpp:92:1: warning: control reaches end of non-void function [-Wreturn-type]
+  Note:
+
   - Nella parte del taglio ho dovuto riscrivere due volte tutta la logica (una volta per il taglio su x e una volta per il taglio su y), c'è sicuramente un modo per scriverlo più pulito, se lo trovo lo implento.
 
 La funzione così non restituisce `ordering.txt`nel formato richiesto. L'indice m sarà la posizione nella lista finale restituita dalla funzione e l'indice n sarà il valore nella lista.
