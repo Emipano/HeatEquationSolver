@@ -114,6 +114,14 @@ int main() {
     }
 
     // ordinamento
-    // manca da chiamare la funzione e mettere tutto nel file richiesto
+    vector<int> ordinamento = ordina(punti, true);
+
+    // scrittura file ordering.txt
+    ofstream fileOrder("ordering.txt");
+    for (int m = 0; m < ordinamento.size(); m++) {
+        fileOrder << m << " " << ordinamento[m] << endl;
+    }
+    fileOrder.close();
+
     return 0;
 }
