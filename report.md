@@ -81,6 +81,10 @@ Output: Array `x` soluzione del sistema lineare
   - Poi L.T*x = y, con con `spsolve_triangular(..., lower=False)`
   - L'array x dovrebbe essere la soluzione del sistema.
 
+  Note:
+  - Ho provato con N=4 ma viene un risultato molto sospetto, ovvero il primo elemento di x uguale al negativo del primo elemento di rhs, e tutto il resto 0.
+  - Non so dove è il problema, se in questo codice o nella costruzione della matrice quindi nella task 3. I numeri in A.txt e rhs.txt in realtà sembrano plausibili però non si sa mai.
+
 
 ### Task 5
 
