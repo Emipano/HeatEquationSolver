@@ -74,16 +74,16 @@ Output: Array `x` soluzione del sistema lineare
 
 - Costruzione matrice sparsa: Leggo `A.txt` con `np.loadtxt(..., unpack=True)` per ottenere tre liste `i`, `j`, `A[i,j]`. Con `scipy.sparse.coo_matrix()` costruisco la matrice in formato COO e con `.tocsc()`la converato in CSC.
 - Leggo `rhs.txt` con `np.loadtxt`.
-- Definisco la funzione `my_cholesky` come sul pdf e con `my_cholesky(-A)` ottengo L.
+- Definisco la funzione `my_cholesky` come sul pdf e con `my_cholesky(-A)` ottengo L.T (non L!!).
 - Risolvo il sistema in due passaggi:
 
-  - Prima L*y = -rhs, con `spsolve_triangular(..., lower=True)`
+  - Prima L*y = rhs, con `spsolve_triangular(..., lower=True)`
   - Poi L.T*x = y, con con `spsolve_triangular(..., lower=False)`
   - L'array x dovrebbe essere la soluzione del sistema.
 
   Note:
-  - Ho provato con N=4 ma viene un risultato molto sospetto, ovvero il primo elemento di x uguale al negativo del primo elemento di rhs, e tutto il resto 0.
-  - Non so dove è il problema, se in questo codice o nella costruzione della matrice quindi nella task 3. I numeri in A.txt e rhs.txt in realtà sembrano plausibili però non si sa mai.
+  - A quanto pare my_cholensky() non restituisce la matrice triangolare inferiore (L) come credevo, ma la triangolare superiore (L.T). Bastava scambiarle per risolvere il problema, ora il codice fornisce un residuo dell'ordine di e-16 contro quello precedente intorno a 0.2.
+  - Avevo messo un segno - di troppo a rhs.
 
 
 ### Task 5
