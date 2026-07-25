@@ -4,7 +4,7 @@
 
 ### Task 1
 
-Input: Numero intero N
+Input: Numero intero N, da passare da terminale (./task1 N)
 
 Output: `coords.txt` e `connectivity.txt`
 
@@ -14,7 +14,7 @@ Output: `coords.txt` e `connectivity.txt`
 
   Note:
 
-  - Per ora N è un int fisso, per la task 5 se voglio automatizzare lo devo rendere un argomento che posso passare da terminale (o `subprocess.run`).
+  - N è un argomento da passare dal terminale con "./task N".
 
 ### Task 2
 
@@ -43,7 +43,7 @@ La funzione così non restituisce `ordering.txt`nel formato richiesto. L'indice 
 
 ### Task 3
 
-Input: `connectivity.txt`, `ordering.txt`, `coords.txt`, u0 per il punto facoltativo
+Input: `connectivity.txt`, `ordering.txt`, `coords.txt`, 
 
 Output: `A.txt`, `rhs.txt`
 
@@ -58,11 +58,10 @@ Output: `A.txt`, `rhs.txt`
   - Con un ciclo for per ogni arco (n1,n2) in `connectivity.txt`:
   
     - Ogni volta che devo includere un indice chiamo la funzione così sceglie da solo m o n in base al flag.
-    - Scrivo "n1  n2  k/h^2" e il simmetrico "n2  n1  k/h^2" su `A.txt`. (Se non avessi escluso i doppioni da connectivity.txt in task1 non sarebbe necessario aggiungere manualmente i simmetrici, ma ormai...)
+    - Scrivo "n1  n2  k/h^2" e il simmetrico "n2  n1  k/h^2" su `A.txt`. Se non avessi escluso i doppioni da connectivity.txt in task1 non sarebbe necessario aggiungere manualmente i simmetrici, ma ormai...
 
   Note:
-  - Come per la task 1 per ora N e fisso, se automatizzo la task 5 sarà da cambiare in un argomento da passare dal terminale.
-  - Il flag che decide se usare nested dissection per ora è fisso, come per N se automatizzo la task 5 lo devo rendere passabile da terminale.
+  - Si devono passare N e ndTrue o ndFalse in base a come si vuole l'ordinamento: "./task3 N ndTrue" o "./task3 N ndFalse".
   - Ho chiamato la funzione di mappatura da n a m ogni volta che compariva un indice, col senno di poi sarebbe stato meglio definire l'indice con la funzione una sola volta e poi usare quello. Se ho tempo lo farò per migliorare la leggibilità.
   - Per ora ho considerato u0=0. Per u0 diverse il problema è che mi servono informazioni sui punti di bordo che in `connectivity.txt` avevo escluso perché non erano richieste, quindi o modifico la task 1 per includere le informazioni sui punti di bordo oppure devo ripetere il procedimento della task 1 senza escludere i punti del bordo. 
 
@@ -84,13 +83,13 @@ Output: Array `x` soluzione del sistema lineare
   Note:
   - A quanto pare my_cholensky() non restituisce la matrice triangolare inferiore (L) come credevo, ma la triangolare superiore (L.T). Bastava scambiarle per risolvere il problema, ora il codice fornisce un residuo dell'ordine di e-16 contro quello precedente intorno a 0.2.
   - Avevo messo un segno - di troppo a rhs.
+  - Ho inglobato tutto in una funzione da chiamare in task5. Con time misuro i tempi impiegati nella fattorizzazione e con Lt.nnz il numero di elementi non-zero di Lt.
 
 
 ### Task 5
 
 - Grafici della soluzione: Devo plottare la soluzione in uscita dalla task 4. Il vettore `x` dovrebbe essere ordinato secondo l'indice `m`, quindi tramite `ordering.txt` e `coords.txt` devo ricondurmi alle coordinate spaziali `i,j` in modo che il plot abbia un senso fisico. Per realizzare il grafico faccio utilizzo delle `colormaps` di `matplotlib` in modo da rappresentare diverse temperature con diversi colori.
-- È richiesto di ottenere le soluzioni per 6 valori di N per entrambi gli ordinamento, quindi dovrei eseguire un totale di 12 volte i codici delle task da 1 a 4 e segnarmi i valori richiesti (i tempi e il numero di entrate non-zero). Sembra tedioso da fare manualmente, potrei provare ad automatizzare il processo tramite la libreria di python `subprocess`, dovrei fare due cicli for, uno su N e uno interno sulla modalità di ordinamento. Probabilmente sarà necessario adattare i codici in C++, per esempio N deve essere un argomento del programma della task 1, così posso eseguirlo con N diversi senza ricompilarlo ogni volta. Non credo di poter usare `subprocess` per runnare una cella specifica di un notebook jupyter (ovvero la task 4), quindi probabilmente sarà necessario copiare la task 4 su un file .py separato.
+- È richiesto di ottenere le soluzioni per 6 valori di N per entrambi gli ordinamento, quindi dovrei eseguire un totale di 12 volte i codici delle task da 1 a 4 e segnarmi i valori richiesti (i tempi e il numero di entrate non-zero). Sembra tedioso da fare manualmente, potrei provare ad automatizzare il processo tramite la libreria di python `subprocess`, dovrei fare due cicli for, uno su N e uno interno sulla modalità di ordinamento. Probabilmente sarà necessario adattare i codici in C++, per esempio N deve essere un argomento del programma della task 1, così posso eseguirlo con N diversi senza ricompilarlo ogni volta. Per la task4 non c'è bisogno di creare un file .py separato come avevo pensato inizialmente, posso inglobare tutto il codice nella cella di task4 in una funzione e chiamarla nella cella di task5.
 
   Note:
   - Per ora faccio con N fisso ma provo da subito a mettere un bool che governi su quale ordinamento lavorare.
-  - l'array x con la soluzione per ora viene dalla cella precedente (task4)
