@@ -2,6 +2,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <cmath>
+#include <cstdlib>
 
 using namespace std;
 
@@ -24,9 +25,9 @@ int map_nm(int indice_n, bool nested_dissection, unordered_map<int,int>& n_to_m)
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) { // si deve passare N e ndTrue o ndFalse in base a come si vuole l'ordinamento: "./task3 N ndTrue" o "./task3 N ndFalse"
 
-    int N = 4;
+    int N = atoi(argv[1]); 
     double h = 1.0/(N+1);
     double K = 0.01;
 
@@ -82,7 +83,14 @@ int main() {
 
     fileOrder.close();
 
-    bool nested_dissection = true; // flag che governa che ordinamento usare
+    bool nested_dissection; // flag che governa che ordinamento usare
+    string modalità = argv[2];
+    if (modalità == "ndTrue") {
+        nested_dissection = true;
+    }
+    else if (modalità == "ndFalse") {
+        nested_dissection = false;
+    }
 
     // generazione A.txt e rhs.txt
     vector<double> rhs(punti.size());

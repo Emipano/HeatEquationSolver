@@ -1,5 +1,6 @@
 #include <vector>
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -12,11 +13,11 @@ struct arco {
     int e, n1, n2;
 };
 
-int main() {
+int main(int argc, char* argv[]) { // si deve passare N: "./task1 N"
 
     // generazione griglia
 
-    int N = 4;
+    int N = atoi(argv[1]); 
     double h = 1.0/(N+1);
     vector<punto> punti;
     int n = 0;
