@@ -43,7 +43,7 @@ La funzione così non restituisce `ordering.txt`nel formato richiesto. L'indice 
 
 ### Task 3
 
-Input: `connectivity.txt`, `ordering.txt`, `coords.txt`, 
+Input: `connectivity.txt`, `ordering.txt`, `coords.txt`, N e ndTrue o ndFalse da passare da terminale.
 
 Output: `A.txt`, `rhs.txt`
 
@@ -96,3 +96,4 @@ Output: Array `x` soluzione del sistema lineare
   Problemi:
 
     - Per N=1024 il sistema forza la chiusura di vscodium perché occupa troppa memoria. Per ora mi fermo a 512, non so come si può alleggerire il codice.
+    - La parte che occupa troppa memoria sembrerebbe essere per N=1024 nello specifico con ndFalse. Ho incluso una cella con lo stesso codice modificato leggermente per saltare la fattorizzazione per N=1024 e ndFalse.
