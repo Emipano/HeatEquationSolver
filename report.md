@@ -83,13 +83,16 @@ Output: Array `x` soluzione del sistema lineare
   Note:
   - A quanto pare my_cholensky() non restituisce la matrice triangolare inferiore (L) come credevo, ma la triangolare superiore (L.T). Bastava scambiarle per risolvere il problema, ora il codice fornisce un residuo dell'ordine di e-16 contro quello precedente intorno a 0.2.
   - Avevo messo un segno - di troppo a rhs.
-  - Ho inglobato tutto in una funzione da chiamare in task5. Con time misuro i tempi impiegati nella fattorizzazione e con Lt.nnz il numero di elementi non-zero di Lt.
+  - Ho inglobato tutto in una funzione da chiamare in task5. Con time misuro i tempi impiegati nella fattorizzazione e con Lt.nnz il numero di elementi non-zero di Lt. La funzione restituisce x, tempo, Lt.nnz, A.
 
 
 ### Task 5
 
-- Grafici della soluzione: Devo plottare la soluzione in uscita dalla task 4. Il vettore `x` dovrebbe essere ordinato secondo l'indice `m`, quindi tramite `ordering.txt` e `coords.txt` devo ricondurmi alle coordinate spaziali `i,j` in modo che il plot abbia un senso fisico. Per realizzare il grafico faccio utilizzo delle `colormaps` di `matplotlib` in modo da rappresentare diverse temperature con diversi colori.
-- È richiesto di ottenere le soluzioni per 6 valori di N per entrambi gli ordinamento, quindi dovrei eseguire un totale di 12 volte i codici delle task da 1 a 4 e segnarmi i valori richiesti (i tempi e il numero di entrate non-zero). Sembra tedioso da fare manualmente, potrei provare ad automatizzare il processo tramite la libreria di python `subprocess`, dovrei fare due cicli for, uno su N e uno interno sulla modalità di ordinamento. Probabilmente sarà necessario adattare i codici in C++, per esempio N deve essere un argomento del programma della task 1, così posso eseguirlo con N diversi senza ricompilarlo ogni volta. Per la task4 non c'è bisogno di creare un file .py separato come avevo pensato inizialmente, posso inglobare tutto il codice nella cella di task4 in una funzione e chiamarla nella cella di task5.
+- Grafici della soluzione: Devo plottare la soluzione in uscita dalla task 4. Il vettore `x` dovrebbe essere ordinato secondo l'indice `m`, quindi tramite `ordering.txt` e `coords.txt` devo ricondurmi alle coordinate spaziali `i,j` (passando da `n`) in modo che il plot abbia un senso fisico. Per realizzare il grafico faccio utilizzo delle `colormaps` di `matplotlib` in modo da rappresentare diverse temperature con diversi colori.
+- È richiesto di ottenere le soluzioni per 6 valori di N per entrambi gli ordinamento, quindi dovrei eseguire un totale di 12 volte i codici delle task da 1 a 4 e segnarmi i valori richiesti (i tempi e il numero di entrate non-zero). Sembra tedioso da fare manualmente, ho automatizzato il processo tramite la libreria di python `subprocess`: Due cicli for, uno su N e uno interno sulla modalità di ordinamento. Ho modificato i file delle task 1, 3, 4 per poterli runnare con N diversi e con ordinamento a piacere. Per la task4 non c'è bisogno di creare un file .py separato come avevo pensato inizialmente, posso inglobare tutto il codice nella cella di task4 in una funzione e chiamarla nella cella di task5.
+- i plot e le strutture di A li eseguo dentro i cicli. Con plt.show fuori dai cicli me li stampa tutti insieme. I tempi e nzz li metto in una lista di dizionari che contengono informazioni su N e ordinamento a cui sono stati presi.
+- Posso realizzare dei plot dei tempi e nnz in funzione di N, confrontando i due ordinamenti.
 
-  Note:
-  - Per ora faccio con N fisso ma provo da subito a mettere un bool che governi su quale ordinamento lavorare.
+  Problemi:
+
+    - Per N=1024 il sistema forza la chiusura di vscodium perché occupa troppa memoria. Per ora mi fermo a 512, non so come si può alleggerire il codice.
